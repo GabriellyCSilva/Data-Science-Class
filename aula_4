@@ -56,3 +56,16 @@ desvio_padrao_populacional = np.std(dados, ddof = 0)
 #amplitude 
 amplitude = np.max(dados) - np.min(dados)
 
+#Estatisticas ordinais - moda 
+moda = stats.mode(dados, keepdims = True).mode[0]
+
+#Percentil 
+percentil_90 = np.percentil(dados, 90)
+
+#Quantil 
+quantil_25 = np.quantile(dados, 0.25)
+
+#Desvio absoluto mediano da mediana (mad)
+mad = stats.median_abs_deviation(dados)
+
+
