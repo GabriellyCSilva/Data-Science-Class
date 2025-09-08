@@ -1,0 +1,58 @@
+import numpy as np 
+import scipy as sp #Complementa o pandas / Estatisticas, teste de hipótese
+import pandas as pd 
+
+#Quando não temos numero repetido para achar a moda, todos ou nenhum são moda
+
+#Dados de exemplo
+dados = [10, 20, 30, 40, 50, 100, 150, 200, 300, 500]
+
+#Média (mean)
+media = np.mean(dados) #precisamos buscar a media na biblioteca do np
+#Toda vez que vamos chamar uma biblioteca, colocamos biblioteca.nome_da_media(dados)
+print("Média:", media)
+
+#Media ponderada (weighted mean)
+pesos = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3] #Peso para cada elemento
+media_ponderada = np.average(dados, weights=pesos) #Preciso passar o peso também, o peso que passo precisa ter a mesma qtd dos dados 
+print("Média ponderada:", media_ponderada)
+
+#Mediana (median)
+mediana = np.median(dados)
+print("Mediana:", mediana)
+
+#Media ponderada (weighted mean)
+def mediana_ponderada(dados, pesos):
+  dados_ordenados, pesos_ordenados = zip(*sorted(zip(dados, pesos))) #ordena o data frame do menos para o maior 
+  soma_pesos = np.cumsum(pesos_ordenados) #criamos um novo peso aqui, ele ignora o que ja existe 
+  return dados_ordenados[np.searchsorted(soma_pesos, soma_pesos[-1] / 2)]
+
+mediana_ponderada = mediana_ponderada(dados, pesos)
+print("Mediana ponderada:", mediana_ponderada)
+
+#Media aparada (trimmed mean)
+media_aparada = stats.trim_mean(dados, proportiontocut = 0.1) #avisa quanto vai cortar
+#remove os 10% do menor e maior valor
+
+#IQR (Interquartile Range) - Intervalo interquartil 
+p25, p75 = np.percentile(dados, [25, 75])
+iqr = p75 - p25
+print("IQR:", iqr)
+
+#Detecção e outliers com iqr
+limite_inferior = p25 - 1,5 * iqr
+limite_superior = p75 + 1.5 * iqr
+outliers = [x for x in dados if x < limite_inferior or x > limite_superior]
+
+#Variancia (variance)
+variancia = np.var(dados) 
+
+#Desvio padrão amostral (sample standard deviation)
+desvio_padrao_amostral = np.std(dados, ddof = 1)
+
+#Desvio padrão populacional 
+desvio_padrao_populacional = np.std(dados, ddof = 0)
+
+#amplitude 
+amplitude = np.max(dados) - np.min(dados)
+
